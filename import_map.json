@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "oak": "https://deno.land/x/oak@v10.6.0/mod.ts",
+    "sqlite": "https://deno.land/x/sqlite@v3.4.0/mod.ts",
+    "ws": "https://deno.land/std@0.95.0/ws/mod.ts"
+  }
+}
