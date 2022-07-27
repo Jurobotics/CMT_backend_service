@@ -8,6 +8,7 @@ class Database {
     constructor() {
         this.db = new DB();
     }
+    
     /**
      * 
      * @param file SQL File
@@ -19,21 +20,23 @@ class Database {
         if (fileExtension !== "sql") {
             throw new Error("File is not a SQL file");
         }
-        console.log(path.join(Deno.cwd().split("src")[0], file))
-        const sql = await Deno.readTextFile(path.join(this.dir, file));
-        await this.db.execute(sql);
 
-        return `Database initialized with file: ${file}`;
+        try {
+            const sql = await Deno.readTextFile(path.join(this.dir, file));
+            await this.db.execute(sql);
+            return `Database initialized with file: ${file}`;
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     public async close(): Promise<void> {
         await this.db.close();
     }
 
-    public async query(sql: string, args: any = []): Promise<any> {
+    public async query(sql: string, args: Array<any> = []): Promise<any> {
         const res = await this.db.query(sql, args);
         return res;
-        
     }
 }
 

@@ -7,7 +7,7 @@ interface Rezept {
     beschreibung: string;
     zutaten: string;
     zubereitung: string;
-  }
+}
   
 const router = new Router({
     prefix: "/rezept",
