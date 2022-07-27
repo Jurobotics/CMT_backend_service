@@ -1,12 +1,24 @@
-import { serve } from "./deps.ts";
+import { Application } from "oak";
 
-const PORT = 8000;
+import db from "./utils/database.ts";
 
-const s = serve({ port: PORT });
+import router from './routes/rezept.ts';
 
-const body = new TextEncoder().encode("Hello World\n");
+import routerQueue from './routes/queue.ts';
 
-console.log(`Server started on port ${PORT}`);
-for await (const req of s) {
-  req.respond({ body });
-}
+await db.init("test.sql");
+
+const app = new Application();
+
+// db.init('test.sql');
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+
+
+app.use(routerQueue.routes());
+app.use(routerQueue.allowedMethods());
+
+
+await app.listen({ port: 8000 });
