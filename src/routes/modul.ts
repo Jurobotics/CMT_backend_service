@@ -7,15 +7,15 @@ interface Modul {
     dosierer: string;
 } 
 
-const routerModul = new Router({
+const router = new Router({
     prefix: "/modul",
 });
 
-routerModul.get('/', async (ctx) => {
+router.get('/', async (ctx) => {
     ctx.response.body = await db.query('SELECT * FROM module');
 });
 
-routerModul.post('/', async (ctx) => {
+router.post('/', async (ctx) => {
     const body: Modul = await ctx.request.body({ type: 'json' }).value;
 
     db.query('INSERT INTO module (name, dosierer) VALUES (?, ?)', [body.name, body.dosierer]);
@@ -26,4 +26,4 @@ routerModul.post('/', async (ctx) => {
     }
 })
 
-export default routerModul;
+export default router;

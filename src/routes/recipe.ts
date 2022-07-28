@@ -1,7 +1,7 @@
 import { Router } from "oak";
 import db from "../utils/database.ts";
 
-interface Rezept {
+interface Recipe {
     id?: number;
     name: string;
     beschreibung: string;
@@ -10,7 +10,7 @@ interface Rezept {
 }
   
 const router = new Router({
-    prefix: "/rezept",
+    prefix: "/recipe",
 })
 
 router.get('/', async (ctx) => {
@@ -26,7 +26,7 @@ router.get('/:id', async (ctx) => {
   
   
 router.post('/', async (ctx) => {
-    const body: Rezept = await ctx.request.body({ type: 'json' }).value;
+    const body: Recipe = await ctx.request.body({ type: 'json' }).value;
   
     db.query('INSERT INTO rezepte (name, beschreibung, zutaten, zubereitung) VALUES (?, ?, ?, ?)', [body.name, body.beschreibung, body.zutaten, body.zubereitung]);
     
