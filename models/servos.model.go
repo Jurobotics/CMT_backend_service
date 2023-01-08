@@ -2,6 +2,7 @@ package models
 
 import "juro-go/database"
 
-type Order struct {
+type Servos struct {
 	database.DefaultModel
+	Arduino int `json:"arduino"`
 }

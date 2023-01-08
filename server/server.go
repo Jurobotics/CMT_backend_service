@@ -22,6 +22,7 @@ func Create() *fiber.App {
 
 func Listen(app *fiber.App) error {
 	serverPort := os.Getenv("SERVER_PORT")
+
 	if serverPort == "" {
 		serverPort = "3000"
 	}

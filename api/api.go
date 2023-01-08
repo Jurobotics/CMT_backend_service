@@ -12,7 +12,7 @@ func Setup(app *fiber.App) {
 	v1.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("API")
 	})
-	// order.Routes(v1)
+
 	orderGroup := v1.Group("/order")
 	order.Routes(orderGroup)
 
