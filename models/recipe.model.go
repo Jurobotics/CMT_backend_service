@@ -1,9 +1,9 @@
 package models
 
-import "juro-go/database"
+import "gorm.io/gorm"
 
 type Recipe struct {
-	database.DefaultModel
+	gorm.Model
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Preparation string `json:"preparation"`

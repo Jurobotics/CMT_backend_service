@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"juro-go/models"
 	"log"
 	"os"
 	"time"
@@ -33,6 +34,8 @@ func SetupDatabase(path string) {
 	}
 
 	DB, err = gorm.Open(sqlite.Open(path), &config)
+
+	DB.AutoMigrate(&models.Recipe{})
 
 	if err != nil {
 		log.Fatal(err)

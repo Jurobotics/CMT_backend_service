@@ -1,8 +1,8 @@
 package models
 
-import "juro-go/database"
+import "gorm.io/gorm"
 
 type Servos struct {
-	database.DefaultModel
+	gorm.Model
 	Arduino int `json:"arduino"`
 }
