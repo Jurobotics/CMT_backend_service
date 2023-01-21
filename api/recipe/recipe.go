@@ -13,11 +13,7 @@ type RecipeBody struct {
 }
 
 func getRecipe(ctx *fiber.Ctx) error {
-	var a [2]string
-	a[0] = "test"
-	a[1] = "test"
-
-	return ctx.JSON(pkg.SuccessResponse(a))
+	return ctx.SendString("OK")
 }
 
 func getRecipeById(ctx *fiber.Ctx) error {
