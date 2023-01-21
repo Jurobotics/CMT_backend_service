@@ -3,10 +3,10 @@
 
 ## Todos
 
-* [X] Datenbank modelle finalisieren
-  * [X] Ingredient
-  * [X] Ingredients
-  * [X] Servos
+* [X] ~~Datenbank modelle finalisieren~~
+  * [X] ~~Ingredient~~
+  * [X] ~~Ingredients~~
+  * [X] ~~Servos~~
 * [ ] Routes fertigstellen
   * [ ] Order
   * [ ] Recipe
