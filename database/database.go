@@ -5,7 +5,6 @@ import (
 	"juro-go/models"
 	"log"
 	"os"
-	"time"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -15,11 +14,6 @@ import (
 var (
 	DB *gorm.DB
 )
-
-type DefaultModel struct {
-	ID        uint      `gorm:"primary_key" json:"id"`
-	CreatedAt time.Time `json:"createdAt"`
-}
 
 func SetupDatabase(path string) {
 	var err error

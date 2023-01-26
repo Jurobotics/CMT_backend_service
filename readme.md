@@ -1,6 +1,5 @@
 # Cocktailmaker Backend – Rewrite in Go-Lang
 
-
 ## Todos
 
 * [X] ~~Datenbank modelle finalisieren~~
