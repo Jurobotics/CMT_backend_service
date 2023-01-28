@@ -12,6 +12,8 @@
   * [ ] Module
 
 ## Dokumentation
+### Aufbau
+!!Servos brauchen eine Externe Spannungs versorgung von 5V sonst können sie nicht stark genug drücken!
 
 ### Projekt starten
 
