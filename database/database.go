@@ -29,7 +29,7 @@ func SetupDatabase(path string) {
 
 	DB, err = gorm.Open(sqlite.Open(path), &config)
 
-	DB.AutoMigrate(&models.Recipe{}, &models.Ingredient{}, &models.Servo{}, &models.Ingredients{})
+	DB.AutoMigrate(&models.Recipe{}, &models.Ingredient{}, &models.Ingredients{})
 
 	if err != nil {
 		log.Fatal(err)

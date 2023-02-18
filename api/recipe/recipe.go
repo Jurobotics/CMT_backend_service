@@ -13,8 +13,8 @@ import (
 )
 
 type RecipeData struct {
-	Recipe      models.Recipe       `json:"recipe"`
-	Ingredients []models.Ingredient `json:"ingredients"`
+	Recipe      models.Recipe            `json:"recipe"`
+	Ingredients []ingredient.Ingredients `json:"ingredients"`
 }
 
 func GetRecipeById(id int) RecipeData {
