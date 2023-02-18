@@ -1,33 +1,46 @@
 package recipe
 
 import (
+	"errors"
+	"juro-go/api/ingredient"
 	"juro-go/models"
 	"juro-go/pkg"
+	"strconv"
 
 	"juro-go/database"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-type RecipeBody struct {
+type RecipeData struct {
+	Recipe      models.Recipe       `json:"recipe"`
+	Ingredients []models.Ingredient `json:"ingredients"`
 }
 
-func getRecipe(ctx *fiber.Ctx) error {
-	return ctx.SendString("OK")
+func GetRecipeById(id int) RecipeData {
+	var res RecipeData
+	database.DB.Model(&models.Recipe{}).Where("id=?", id).First(&res.Recipe)
+
+	res.Ingredients = ingredient.GetIngredientByRecipeId(id)
+
+	return res
+}
+
+func getRecipes(ctx *fiber.Ctx) error {
+	var recipes []models.Recipe
+	result := database.DB.Find(&recipes)
+	if result.RowsAffected == 0 {
+		return ctx.JSON(pkg.ErrorResponse(errors.New("no recipes found")))
+	}
+	return ctx.JSON(pkg.SuccessResponse(recipes))
 }
 
 func getRecipeById(ctx *fiber.Ctx) error {
 	recipeId := ctx.Params("id")
 
-	var recipe models.Recipe
+	id, _ := strconv.Atoi(recipeId)
 
-	result := database.DB.Where("id = ?", recipeId).First(&recipe)
-
-	if result.RowsAffected == 0 {
-		return ctx.SendStatus(404)
-	}
-
-	return ctx.JSON(&recipe)
+	return ctx.JSON(pkg.SuccessResponse(GetRecipeById(id)))
 }
 
 func createRecipe(ctx *fiber.Ctx) error {
