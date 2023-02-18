@@ -7,13 +7,12 @@
   * [X] ~~Ingredients~~
   * [X] ~~Servos~~
 * [ ] Routes fertigstellen
-  * [ ] Order
-  * [ ] Recipe
-  * [ ] Module
+  * [WIP] Order
+  * [X] Recipe
 
 ## Dokumentation
 ### Aufbau
-!!Servos brauchen eine Externe Spannungs versorgung von 5V sonst können sie nicht stark genug drücken!
+!!Servos brauchen eine Externe Spannungs versorgung von 5V sonst können sie nicht stark genug drücken!!
 
 ### Projekt starten
 
