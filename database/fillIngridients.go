@@ -1,55 +1,57 @@
 package database
 
 import (
-	"encoding/csv"
-	"io"
+	"github.com/xuri/excelize/v2"
 	"juro-go/models"
 	"log"
-	"os"
+	"strconv"
 )
 
-func FillIng() { // idk why this works just dont doubt it
+func FillIng() { // I don't know why this works just don't doubt it
 
-	file, err := os.Open("data/drinksNoneAlk.csv")
+	file, err := excelize.OpenFile("data/Drinks (2).xlsx")
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	reader := csv.NewReader(file)
-
-	_, err = reader.Read()
+	i := 1
+	rows, err := file.GetRows("Sheet1")
 	if err != nil {
 		log.Fatal(err)
 	}
-	//temp := make([]string, 1)
 
 	for {
-
-		row, err := reader.Read()
-		if err == io.EOF {
+		if i == len(rows) {
 			break
 		}
-		if err != nil {
-			log.Fatal(err)
-		}
+
 		temp := models.Ingredient{}
 
-		for k := 18; k < 32; k++ {
+		for k := fIng; k < 27; k++ {
 
-			DB.Find(&temp, "name like ?", row[k])
+			j := k + 12
 
-			if temp.Name == row[k] || temp.Name != "" {
+			DB.Find(&temp, "name like ?", rows[i][k])
+
+			if temp.Name == rows[i][k] || temp.Name != "" {
 				continue
 			} else {
+
 				ingredient := models.Ingredient{
-					Name: row[k],
+					Name:  rows[i][k],
+					Solid: isSolid(rows[i][j]),
 				}
 				DB.Create(&ingredient)
 			}
 
 		}
-
+		i++
 	}
+}
+func isSolid(string2 string) bool {
+	if alc1, err := strconv.ParseBool(string2); err == nil {
+		return alc1
+	}
+	return false
 }
 
 /*func contains(arr []string, str string) bool {

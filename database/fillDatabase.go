@@ -1,85 +1,91 @@
 package database
 
 import (
-	"encoding/csv"
 	"fmt"
-	"io"
+	"github.com/xuri/excelize/v2"
 	"juro-go/models"
 	"log"
-	"os"
 	"strconv"
 )
 
 const (
-	image = 16
-	prep  = 11
-	name  = 1
-	desc  = 5
+	image = 2
+	alc   = 1
+	name  = 0
+	fIng  = 15
+	aIng  = 12
 )
 
 func FillDB() {
-
-	file, err := os.Open("data/drinksAlk.csv")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	reader := csv.NewReader(file)
-
-	_, err = reader.Read()
-	if err != nil {
-		log.Fatal(err)
-	}
+	rows := readFile("data/Drinks (2).xlsx")
+	i := 1
 
 	for {
-		row, err := reader.Read()
-		if err == io.EOF {
+		fmt.Println(i)
+		if i == len(rows) {
 			break
 		}
-		if err != nil {
-			log.Fatal(err)
-		}
-
 		ingredients := make([]models.Ingredients, 0)
 
-		for j := 0; j < 15; j++ {
+		for j := 0; j < aIng; j++ {
 
-			amount, _ := strconv.Atoi(row[32+j])
-			amount *= 30
 			temp := models.Ingredient{}
-			DB.Find(&temp, "name like ?", row[17+j])
-			//fmt.Println(1, temp.ID)
+			DB.Find(&temp, "name like ?", rows[i][fIng+j])
 
-			if row[17+j] == "" {
+			def := models.Default{}
+
+			var amount float32 = 0
+			var amountSolid string
+
+			if temp.Name == "" {
 				break
-
-			} else {
-				fmt.Println(2, row[17+j])
-				fmt.Println(3, temp.ID)
-
-				ingredients = append(ingredients, models.Ingredients{
-
-					Amount:       amount,
-					IngredientID: temp.ID,
-					Ingredient:   models.Ingredient{},
-					RecipeID:     0,
-					Recipe:       models.Recipe{},
-				})
 			}
+			if rows[i][27+j] == "1" {
+				amountSolid = rows[i][3+j]
+			} else {
+
+				a, err := strconv.ParseFloat(rows[i][3+j], 32)
+				if err != nil {
+					log.Fatal(err)
+				}
+				amount = float32(a)
+			}
+			ingredients = append(ingredients, models.Ingredients{
+				Default:      def,
+				Amount:       amount,
+				AmountSolid:  amountSolid,
+				IngredientID: temp.ID,
+				Ingredient:   models.Ingredient{},
+				RecipeID:     def.ID,
+				Recipe:       models.Recipe{},
+			})
 
 		}
+		var alc1 bool
+		alc1, _ = strconv.ParseBool(rows[i][alc])
 
 		test := models.Recipe{
 
-			Name:        row[name],
-			Description: row[desc],
-			Preparation: row[prep],
-			Image:       row[image],
+			Name:        rows[i][name],
+			Image:       rows[i][image],
+			Alc:         alc1,
 			Ingredients: ingredients,
 		}
-
 		DB.Create(&test)
 
+		i++
 	}
 
+}
+func readFile(path string) [][]string {
+	file, err := excelize.OpenFile(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	rows, err := file.GetRows("Sheet1")
+	if err != nil {
+		log.Fatal(err)
+	}
+	return rows
 }

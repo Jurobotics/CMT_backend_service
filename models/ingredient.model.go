@@ -5,6 +5,7 @@ type Ingredient struct {
 	Name      string `json:"name"`
 	DoserSize int    `json:"doser_size"` // Amount of the doser in the Si unit
 	Recipes   []Ingredients
+	Solid     bool
 }
 
 func (Ingredient) TableName() string {

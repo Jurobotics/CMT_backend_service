@@ -2,17 +2,14 @@ package server
 
 import (
 	"fmt"
-	"juro-go/database"
-	"os"
-
 	"github.com/gofiber/fiber/v2"
+	"os"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 func Create() *fiber.App {
-	database.SetupDatabase("./data/test.db")
 
 	app := fiber.New()
 
