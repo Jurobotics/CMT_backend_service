@@ -2,9 +2,10 @@ package models
 
 type Ingredients struct {
 	Default
-	Amount       uint       `json:"amount"`
-	IngredientID uint       `json:"ingredientId"`
+	Amount       float32    `json:"amount"`
+	AmountSolid  string     `json:"amountSolid"`
+	IngredientID int        `json:"ingredientId"`
 	Ingredient   Ingredient `gorm:"foreignKey:IngredientID;references:ID"`
-	RecipeID     uint       `json:"recipeId"`
+	RecipeID     int        `json:"recipeId"`
 	Recipe       Recipe     `gorm:"foreignKey:RecipeID;references:ID"`
 }

@@ -1,17 +1,20 @@
 package main
 
 import (
-	"juro-go/api"
-	"juro-go/api/recipe"
-	"juro-go/server"
+	"juro-go/database"
 )
 
 func main() {
-	app := server.Create()
+	database.SetupDatabase("data/test.db")
 
-	recipe.GetRecipeById(1)
+	//app := server.Create()
 
-	api.Setup(app)
+	//recipe.GetRecipeById(1)
 
-	server.Listen(app)
+	//api.Setup(app)
+
+	//server.Listen(app)
+
+	//database.FillIng()
+	//database.FillDB()
 }

@@ -31,6 +31,8 @@ func SetupDatabase(path string) {
 
 	DB.AutoMigrate(&models.Recipe{}, &models.Ingredient{}, &models.Ingredients{})
 
+	///
+
 	if err != nil {
 		log.Fatal(err)
 	}
